@@ -17,13 +17,13 @@
 git clone https://github.com/DickLan/S23S2-A1-Restaurant.git
 ```
 
-1. 安裝套件 會自動下載package.json紀錄的套件
+2. 安裝套件 會自動下載package.json紀錄的套件
 
 ```
 npm install
 ```
 
-1. 執行專案
+3. 執行專案
 
 ```
 npm run start
