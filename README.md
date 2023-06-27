@@ -7,13 +7,14 @@
 
 安裝
 1.開啟終端機 => cd到專案位置執行
+
 ```
 git clone https://github.com/DickLan/S23S2-A1-Restaurant.git
 ```
-2.
-npm install //會自動安裝套件 package.json紀錄的套件
-3.
-npm run start //執行專案
+
+2.npm install //會自動安裝套件 package.json紀錄的套件
+
+3.npm run start //執行專案
 
 終端顯示 “it's listening on port 3000 now!"表示啟動完成
 請至http://localhost:3000開始使用程式
