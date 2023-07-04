@@ -112,6 +112,18 @@ app.post('/restaurant/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// add
+app.get('/restaurantDB/add', (req, res) => {
+  return res.render('add')
+})
+app.post('/restaurantDB/add', (req, res) => {
+  const name = req.body.name
+  return Restaurant.create({ name })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+
 // search
 app.get('/search', (req, res) => {
   const restaurants = restaList.filter(restaurant => {
