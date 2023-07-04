@@ -82,14 +82,28 @@ app.get('/restaurant/:id', (req, res) => {
     .then((restaurant => res.render('detail', { restaurant })))
     .catch(error => console.log(error))
 })
+// edit get
+app.get('/restaurant/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant => res.render('edit', { restaurant })))
+    .catch(error => console.log(error))
+})
+// edit post
+app.post('/restaurant/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = name
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurant/${id}`))
+    .catch(error => console.log(error))
+})
 
-// app.get('/restaurants/:id', (req, res) => {
-//   const restaurant = restaList.find(restaurant => {
-//     // id是number 所以要tostring
-//     return restaurant.id.toString() === req.params.id
-//   })
-//   res.render('show', ({ restaurant: restaurant }))
-// })
+
 // search
 app.get('/search', (req, res) => {
   const restaurants = restaList.filter(restaurant => {
