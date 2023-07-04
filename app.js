@@ -75,13 +75,21 @@ app.get('/', (req, res) => {
   // console.log(restaurants)
 })
 // 點擊餐廳 跳出詳細說明
-app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaList.find(restaurant => {
-    // id是number 所以要tostring
-    return restaurant.id.toString() === req.params.id
-  })
-  res.render('show', ({ restaurant: restaurant }))
+app.get('/restaurant/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant => res.render('detail', { restaurant })))
+    .catch(error => console.log(error))
 })
+
+// app.get('/restaurants/:id', (req, res) => {
+//   const restaurant = restaList.find(restaurant => {
+//     // id是number 所以要tostring
+//     return restaurant.id.toString() === req.params.id
+//   })
+//   res.render('show', ({ restaurant: restaurant }))
+// })
 // search
 app.get('/search', (req, res) => {
   const restaurants = restaList.filter(restaurant => {

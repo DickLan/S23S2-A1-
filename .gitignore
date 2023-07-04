@@ -1,2 +1,17 @@
-/node_modules
-DC_Store
+# OS X
+.DS_Store
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# npm
+node_modules
+*.log
+*.gz
+
+# dotenv 因為和權限有關 是敏感資料 所以不上git
+.env

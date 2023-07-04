@@ -24,21 +24,32 @@
       <div class="row row-cols-sm-3">
         {{!-- row-cols-sm-3:每個row有3個col的意思 --}}
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src={{this.image}} alt="Sababa 沙巴巴中東美食">
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i> {{this.category}}
+        <div>
+          <a href="/restaurants/{{this.id}}" class="text-secondary">
+            <div class="card mb-3">
+              <img class="card-img-top" src={{this.image}} alt="Sababa 沙巴巴中東美食">
+              <div class="card-body p-3">
+                <h6 class="card-title mb-1">{{this.name}}</h6>
+                <div class="restaurant-category mb-1">
+                  <i class="fas fa-utensils pr-2"></i> {{this.category}}
+                </div>
+                <span class="badge rounded-pill bg-danger font-weight-normal">
+                  {{this.rating}}
+                  <i class="fas fa-star fa-xs"></i>
+                </span>
               </div>
-              <span class="badge rounded-pill bg-danger font-weight-normal">
-                {{this.rating}}
-                <i class="fas fa-star fa-xs"></i>
-              </span>
+
             </div>
-          </div>
-        </a>
+          </a>
+          {{!-- edit/detail/delete --}}
+          <a href="/restaurant/{{this._id}}/edit">Edit</a>
+          <a href="/restaurant/{{this._id}}">Detail</a>
+          <form action="/restaurant/{{this._id}}/delete" method="post" style="display: inline;">
+            <button type="submit">Delete</button>
+          </form>
+
+        </div>
+
         {{/each}}
       </div>
     </div>
