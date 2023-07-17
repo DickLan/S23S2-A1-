@@ -102,7 +102,7 @@ app.post('/restaurant/:id/edit', (req, res) => {
     .then(() => res.redirect(`/restaurant/${id}`))
     .catch(error => console.log(error))
 })
-
+// dick
 // delete
 app.post('/restaurant/:id/delete', (req, res) => {
   const id = req.params.id
