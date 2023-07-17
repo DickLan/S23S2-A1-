@@ -3,7 +3,8 @@ const expressHandlebars = require('express-handlebars')
 const port = 3000
 const restaList = require('./restaurant.json').results
 const app = express()
-// no
+const methodOverride = require('method-override')
+
 // ==================mongoose==========================
 // mongoose
 const mongoose = require('mongoose')
@@ -12,11 +13,14 @@ const bodyParser = require('body-parser')
 const restaurant = require('./models/restaurant')
 // 限制只有在非正式環境 使用dotenv
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 // 設定連線到mongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
 // 取得連線狀態
 const db = mongoose.connection
 db.on('error', () => {
@@ -26,35 +30,7 @@ db.once('open', () => {
   // console.log('mongoDB connected!')
   console.log('mongoDB connected!')
 })
-
-
-
-// 新建種子資料
-// db.once('open', () => {
-//   // console.log('mongoDB connected!')
-//   for (let i = 0; i < 8; i++) {
-//     // console.log(restaList[i].name)
-//     Restaurant.create({
-//       "id": restaList[i].id,
-//       "name": restaList[i].name,
-//       "name_en": restaList[i].name_en,
-//       "category": restaList[i].category,
-//       "image": restaList[i].image,
-//       "location": restaList[i].location,
-//       "phone": restaList[i].phone,
-//       "google_map": restaList[i].google_map,
-//       "rating": restaList[i].rating,
-//       "description": restaList[i].description
-//     })
-//     // Restaurant.create({ name: `${restaList[i].name}`, })
-//   }
-//   console.log('mongoDB connected!')
-// })
-
-
-
 // ===============mongoose End==========================
-
 
 // set template engine 設定樣版引擎
 // 告訴app(exprees) 使用handlebars作為模板引擎 並設預設佈局為main
@@ -74,7 +50,20 @@ app.get('/', (req, res) => {
   // res.render('index', ({ restaurants: restaList }))
   // console.log(restaurants)
 })
-// 點擊餐廳 跳出詳細說明
+
+// add
+// note:add必須放在get:id之前 避免走入錯誤路由
+app.get('/restaurant/add', (req, res) => {
+  return res.render('add')
+})
+app.post('/restaurant/add', (req, res) => {
+  const name = req.body.name
+  return Restaurant.create({ name })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+// 點擊餐廳 跳出詳細說明 detail
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -90,8 +79,8 @@ app.get('/restaurant/:id/edit', (req, res) => {
     .then((restaurant => res.render('edit', { restaurant })))
     .catch(error => console.log(error))
 })
-// edit post
-app.post('/restaurant/:id/edit', (req, res) => {
+// edit put
+app.put('/restaurant/:id', (req, res) => {
   const id = req.params.id
   const name = req.body.name
   return Restaurant.findById(id)
@@ -102,9 +91,8 @@ app.post('/restaurant/:id/edit', (req, res) => {
     .then(() => res.redirect(`/restaurant/${id}`))
     .catch(error => console.log(error))
 })
-// dick
 // delete
-app.post('/restaurant/:id/delete', (req, res) => {
+app.delete('/restaurant/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
@@ -112,16 +100,7 @@ app.post('/restaurant/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// add
-app.get('/restaurantDB/add', (req, res) => {
-  return res.render('add')
-})
-app.post('/restaurantDB/add', (req, res) => {
-  const name = req.body.name
-  return Restaurant.create({ name })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
+
 
 
 // search

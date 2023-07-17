@@ -17,7 +17,7 @@
 </div>
 
 <div class="container">
-  <a href="./restaurantDB/add">Add</a>
+  <a href="./restaurant/add">Add</a>
 
 </div>
 
@@ -48,7 +48,8 @@
           {{!-- edit/detail/delete --}}
           <a href="/restaurant/{{this._id}}/edit">Edit</a>
           <a href="/restaurant/{{this._id}}">Detail</a>
-          <form action="/restaurant/{{this._id}}/delete" method="post" style="display: inline;">
+          {{!-- method這裡大小寫都可以 --}}
+          <form action="/restaurant/{{this._id}}?_method=DELETE" method="post" style="display: inline;">
             <button type="submit">Delete</button>
           </form>
 
