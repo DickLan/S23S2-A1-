@@ -6,6 +6,8 @@ const restaList = require('./restaurant.json').results
 const app = express()
 const methodOverride = require('method-override')
 require('./config/mongoose')
+// passport 必須在 express-session之後
+const userPassport = require('./config/passport')
 // ==================mongoose==========================
 // mongoose
 
@@ -22,6 +24,7 @@ const routes = require('./routes')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 // 將requset導入 當路徑設定為/routes 就會自動去尋找該目錄下 名為index的檔案
+userPassport(app)
 app.use(routes)
 
 
