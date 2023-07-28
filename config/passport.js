@@ -7,6 +7,7 @@ module.exports = app => {
   app.use(passport.initialize())
   app.use(passport.session())
   // 設定本地登入策略
+  // nameField的值是'字串'
   passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
     // 這裡是檢查是否符合db內的使用者資訊 若符合 就用done將user資料交給req 以供後續使用
     User.findOne({ email })
