@@ -35,6 +35,12 @@ app.use(session({
 // !!!!!! usePassport 必須放在 app.use(session)之後 因為要先定義secret !!!!!!!!
 userPassport(app)
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+
 app.use(routes)
 
 
