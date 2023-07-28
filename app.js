@@ -23,8 +23,18 @@ const routes = require('./routes')
 // 限制只有在非正式環境 使用dotenv
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+
+// secret 是 session 用來驗證 session id 的字串 該字串由伺服器設定 不會洩漏給用戶端
+app.use(session({
+  secret: 'ThisIsResttaurantSecret',
+  resave: false,
+  saveUninitialized: true
+}))
 // 將requset導入 當路徑設定為/routes 就會自動去尋找該目錄下 名為index的檔案
+// !!!!!! usePassport 必須放在 app.use(session)之後 因為要先定義secret !!!!!!!!
 userPassport(app)
+
 app.use(routes)
 
 
@@ -37,12 +47,7 @@ app.use(routes)
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }))
 // 設定視圖引擎為 handlebars
 app.set('view engine', 'handlebars')
-// secret 是 session 用來驗證 session id 的字串 該字串由伺服器設定 不會洩漏給用戶端
-app.use(session({
-  secret: 'ThisIsResttaurantSecret',
-  resave: false,
-  saveUninitialized: true
-}))
+
 
 // 設定靜態檔案 express才知道靜態檔案(html css js)放在哪
 // 才能在handlebars裡面呼叫link&scripts
