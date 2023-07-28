@@ -6,6 +6,14 @@ const restaurantSchema = new Schema({
   id: {
     type: Number,
   },
+  userId: {
+    // type&ref 是 mongoose提供的populate功能 方便建立不同collections 之間的聯繫
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    require: true
+  }
+  ,
   name: {
     type: String,
     require: true

@@ -10,44 +10,49 @@ router.get('/add', (req, res) => {
   return res.render('add')
 })
 router.post('/add', (req, res) => {
+  const userId = req.user._id
   const name = req.body.name
-  return Restaurant.create({ name })
+  return Restaurant.create({ name, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
 // 點擊餐廳 跳出詳細說明 detail
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant => res.render('detail', { restaurant })))
     .catch(error => console.log(error))
 })
 // edit get
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant => res.render('edit', { restaurant })))
     .catch(error => console.log(error))
 })
 // edit put
 router.put('/:id', (req, res) => {
-  const id = req.params.id
   const name = req.body.name
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .then(restaurant => {
       restaurant.name = name
       return restaurant.save()
     })
-    .then(() => res.redirect(`/restaurant/${id}`))
+    .then(() => res.redirect(`/restaurant/${_id}`))
     .catch(error => console.log(error))
 })
 // delete
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
