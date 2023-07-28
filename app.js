@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const expressHandlebars = require('express-handlebars')
 const port = 3000
 const restaList = require('./restaurant.json').results
@@ -33,6 +34,13 @@ app.use(routes)
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }))
 // 設定視圖引擎為 handlebars
 app.set('view engine', 'handlebars')
+// secret 是 session 用來驗證 session id 的字串 該字串由伺服器設定 不會洩漏給用戶端
+app.use(session({
+  secret: 'ThisIsResttaurantSecret',
+  resave: false,
+  saveUninitialized: true
+}))
+
 // 設定靜態檔案 express才知道靜態檔案(html css js)放在哪
 // 才能在handlebars裡面呼叫link&scripts
 app.use(express.static('public'))
