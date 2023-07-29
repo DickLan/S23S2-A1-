@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   id: {
-    type: Number,
+    type: Number
   },
   userId: {
     // type&ref 是 mongoose提供的populate功能 方便建立不同collections 之間的聯繫
@@ -12,8 +12,7 @@ const restaurantSchema = new Schema({
     ref: 'User',
     index: true,
     require: true
-  }
-  ,
+  },
   name: {
     type: String,
     require: true

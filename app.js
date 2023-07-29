@@ -19,12 +19,10 @@ const restaurant = require('./models/restaurant')
 // 引用routes
 const routes = require('./routes')
 
-
 // ！！！這裡的順序需注意 要先methodOverride 才use routes 這樣才能正確使用restAPI！！
 // 限制只有在非正式環境 使用dotenv
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
 
 // secret 是 session 用來驗證 session id 的字串 該字串由伺服器設定 不會洩漏給用戶端
 app.use(session({
@@ -47,9 +45,6 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-
-
-
 // ===============mongoose End==========================
 
 // set template engine 設定樣版引擎
@@ -58,15 +53,11 @@ app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }))
 // 設定視圖引擎為 handlebars
 app.set('view engine', 'handlebars')
 
-
 // 設定靜態檔案 express才知道靜態檔案(html css js)放在哪
 // 才能在handlebars裡面呼叫link&scripts
 app.use(express.static('public'))
 
-
-
-
-// 
+//
 app.listen(port, () => {
   console.log(`it's listening on port ${3000} now!`)
 })

@@ -2,7 +2,7 @@ const exprees = require('express')
 const router = exprees.Router()
 const Restaurant = require('../../models/restaurant')
 
-// index 
+// index
 router.get('/', (req, res) => {
   const userId = req.user._id
   Restaurant.find({ userId })

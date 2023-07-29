@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 
-
-
 // add
 // note:add必須放在get:id之前 避免走入錯誤路由
 router.get('/add', (req, res) => {
@@ -23,7 +21,7 @@ router.get('/:id', (req, res) => {
   const _id = req.params.id
   return Restaurant.findOne({ _id, userId })
     .lean()
-    .then((restaurant => res.render('detail', { restaurant })))
+    .then(restaurant => res.render('detail', { restaurant }))
     .catch(error => console.log(error))
 })
 // edit get
@@ -32,7 +30,7 @@ router.get('/:id/edit', (req, res) => {
   const _id = req.params.id
   return Restaurant.findOne({ _id, userId })
     .lean()
-    .then((restaurant => res.render('edit', { restaurant })))
+    .then(restaurant => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
 })
 // edit put
@@ -58,23 +56,18 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-
-
-
 // search
 router.get('/search', (req, res) => {
   const restaurants = restaList.filter(restaurant => {
     return restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || restaurant.category.includes(req.query.keyword)
     // return a||b
     // 若沒a則return b
-    // 寫法需注意 
+    // 寫法需注意
   })
 
   console.log(restaurants)
   console.log(req.query.keyword)
-  res.render('index', ({ restaurants: restaurants }))
+  res.render('index', ({ restaurants }))
 })
-
-
 
 module.exports = router
