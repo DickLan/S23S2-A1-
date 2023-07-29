@@ -52,16 +52,23 @@ router.post('/register', (req, res) => {
       res.render('register', {
         errors, name, email, password, confirmPassword
       })
-    } else {
-      // 若還未註冊，則寫入資料庫
-      // 從 User 產生一個實例instance
-      const newUser = new User({
-        name, email, password
-      })
-      newUser.save() // 將實例instance存入資料庫
-        .then(() => res.redirect('/users/login'))
-        .catch(err => console.log(err))
     }
+    return bcrypt
+      .genSalt(10)
+      .then(salt => bcrypt.hash(password, salt))
+      .then(hash => User.create({
+        name, email, password: hash
+      }))
+      .then(() => res.redirect('/'))
+      .catch(err => console.log(err))
+    // 若還未註冊，則寫入資料庫
+    // 從 User 產生一個實例instance
+    const newUser = new User({
+      name, email, password
+    })
+    newUser.save() // 將實例instance存入資料庫
+      .then(() => res.redirect('/users/login'))
+      .catch(err => console.log(err))
   })
 })
 
