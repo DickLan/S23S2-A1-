@@ -5,7 +5,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const { use } = require('../routes')
-
+//
 module.exports = app => {
   // 初始化 passport 模組
   app.use(passport.initialize())
