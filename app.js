@@ -8,6 +8,7 @@ const methodOverride = require('method-override')
 require('./config/mongoose')
 // passport 必須在 express-session之後
 const userPassport = require('./config/passport')
+const flash = require('connect-flash')
 // ==================mongoose==========================
 // mongoose
 
@@ -27,17 +28,20 @@ app.use(methodOverride('_method'))
 
 // secret 是 session 用來驗證 session id 的字串 該字串由伺服器設定 不會洩漏給用戶端
 app.use(session({
-  secret: 'ThisIsResttaurantSecret',
+  secret: 'ThisIsMySecret',
   resave: false,
   saveUninitialized: true
 }))
 // 將requset導入 當路徑設定為/routes 就會自動去尋找該目錄下 名為index的檔案
 // !!!!!! usePassport 必須放在 app.use(session)之後 因為要先定義secret !!!!!!!!
-userPassport(app)
+app.use(flash())
 
+userPassport(app)
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
