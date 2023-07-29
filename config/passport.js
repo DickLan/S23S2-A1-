@@ -1,5 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const { use } = require('../routes')
@@ -26,6 +28,38 @@ module.exports = app => {
       })
       .catch(err => done(err, false))
   }))
+
+  // 設定 Google 驗證
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK,
+    // profileField: ['displayName'] //這個設定是和 google 要求開放的資料 但不寫也沒差 不知道為啥
+  },
+    function (accessToken, refreshToken, profile, done) {
+      // auth.js scope內寫了email displayName 所以這裡的profile就會輸出這些項目
+      // console.log(profile._json);
+      const { name, email } = profile._json
+      User.findOne({ email })
+        .then(user => {
+          if (user) return done(null, user)
+          const randomPassrod = Math.random().toString(36).slice(-8)
+          bcrypt
+            .genSalt(10)
+            .then(salt => bcrypt.hash(randomPassrod, salt))
+            .then(hash => User.create({
+              name,
+              email,
+              password: hash
+            }))
+            .then(user => done(null, user))
+            .catch(err => done(err, false))
+        })
+    }
+  ));
+
+
+
   // 設定序列化與反序列化 以節省 session 空間
   passport.serializeUser((user, done) => {
     done(null, user.id)
