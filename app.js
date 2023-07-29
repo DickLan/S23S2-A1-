@@ -22,7 +22,7 @@ const routes = require('./routes')
 // ！！！這裡的順序需注意 要先methodOverride 才use routes 這樣才能正確使用restAPI！！
 // 限制只有在非正式環境 使用dotenv
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config
+  require('dotenv').config()
 }
 
 app.use(bodyParser.urlencoded({ extended: true }))
