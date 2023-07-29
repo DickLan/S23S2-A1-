@@ -47,6 +47,7 @@ db.once('open', () => {
               location: `${restaurantsFromJson[i].location}`,
               rating: `${restaurantsFromJson[i].rating}`,
               description: `${restaurantsFromJson[i].description}`,
+              phone: `${restaurantsFromJson[i].phone}`,
 
               userId
             })

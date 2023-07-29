@@ -1,5 +1,31 @@
-<form action="/restaurant/{{restaurant._id}}?_method=put" method="post">
-  <input type="text" placeholder="name" name="name" value="{{restaurant.name}}">
-  <button type="submit">Save</button>
-  <a href="/">Back</a>
-</form>
+<div class="container mt-3 d-flex justify-content-center">
+  <form action="/restaurant/{{restaurant._id}}?_method=put" method="post">
+    {{!-- label for 要配id --}}
+    <label for="name">Name:</label><br>
+    <input type="text" placeholder="name" name="name" id="name" value={{restaurant.name}}><br>
+
+    <label for="name_en">English Name:</label><br>
+    <input type="text" placeholder="name_en" name="name_en" id="name_en" value={{restaurant.name_en}}><br>
+
+    <label for="category">Category:</label><br>
+    <input type="text" placeholder="category" name="category" id="category" value={{restaurant.category}}><br>
+
+    <label for="location">Location:</label><br>
+    <input type="text" placeholder="location" name="location" id="location" value={{restaurant.location}}><br>
+
+    <label for="rating">Rating:</label><br>
+    <input type="text" placeholder="rating" name="rating" id="rating" value={{restaurant.rating}}><br>
+
+    <label for="description">Description:</label><br>
+    <input type="text" placeholder="description" name="description" id="description"
+      value={{restaurant.description}}><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="text" placeholder="phone" name="phone" id="phone" value={{restaurant.phone}}><br>
+
+    <label for="image">Image:</label><br>
+    <input type="text" placeholder="imageURL" name="image" id="image" value={{restaurant.image}}><br>
+    <button type="submit">Save</button>
+
+  </form>
+</div>

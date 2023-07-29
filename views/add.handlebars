@@ -1,4 +1,30 @@
-<form action="/restaurant/add" method="POST">
-  <input type="text" placeholder="name" name="name" value="none">
-  <button type="submit">Create</button>
-</form>
+<div class="container mt-3 d-flex justify-content-center">
+  <form action="/restaurant/add" method="POST">
+    {{!-- label for 要配id --}}
+    <label for="name">Name:</label><br>
+    <input type="text" placeholder="name" name="name" id="name"><br>
+
+    <label for="name_en">English Name:</label><br>
+    <input type="text" placeholder="name_en" name="name_en" id="name_en"><br>
+
+    <label for="category">Category:</label><br>
+    <input type="text" placeholder="category" name="category" id="category"><br>
+
+    <label for="location">Location:</label><br>
+    <input type="text" placeholder="location" name="location" id="location"><br>
+
+    <label for="rating">Rating:</label><br>
+    <input type="text" placeholder="rating" name="rating" id="rating"><br>
+
+    <label for="description">Description:</label><br>
+    <input type="text" placeholder="description" name="description" id="description"><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="text" placeholder="phone" name="phone" id="phone"><br>
+
+    <label for="image">Image:</label><br>
+    <input type="text" placeholder="imageURL" name="image" id="image"><br>
+
+    <button class="mt-3" type="submit">Create</button>
+  </form>
+</div>
